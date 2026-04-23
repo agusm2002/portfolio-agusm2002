@@ -1,23 +1,328 @@
+---
+interface Props {
+  title?: string;
+}
+const { title = 'Agustín Monti — Portfolio' } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="Portfolio de Agustín Monti — Estudiante de Ingeniería en Informática apasionado por Linux, infraestructura y automatización."
+    />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Background layers -->
+    <div class="bg-blobs" aria-hidden="true">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+    <div class="bg-beams" aria-hidden="true">
+      <div class="beam beam-1"></div>
+      <div class="beam beam-2"></div>
+      <div class="beam beam-3"></div>
+      <div class="beam beam-4"></div>
+      <div class="beam beam-5"></div>
+      <div class="beam beam-6"></div>
+      <div class="beam beam-7"></div>
+    </div>
+    <div class="bg-dots-base" aria-hidden="true"></div>
+    <div class="bg-dots-sharp" aria-hidden="true"></div>
+
+    <slot />
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+  /* ── Custom Properties ───────────────────────────── */
+  :root {
+    --bg: #060e09;
+    --surface: #0c1a10;
+    --surface-2: #101f15;
+    --green-50: #f0fdf4;
+    --green-100: #dcfce7;
+    --green-300: #86efac;
+    --green-400: #4ade80;
+    --green-500: #22c55e;
+    --green-600: #16a34a;
+    --green-700: #15803d;
+    --green-900: #14532d;
+    --text: #e4f0e8;
+    --text-muted: #6b9e7a;
+    --text-dim: #3d5e47;
+    --border: rgba(34, 197, 94, 0.1);
+    --border-hover: rgba(34, 197, 94, 0.28);
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --mouse-x: -500px;
+    --mouse-y: -500px;
+  }
+
+  /* ── Reset ───────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { overflow-x: hidden; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: rgba(34, 197, 94, 0.22); color: var(--green-100); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--green-700); border-radius: 2px; }
+
+  h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.15; }
+
+  a { color: inherit; text-decoration: none; }
+
+  img, svg { display: block; }
+
+  /* ── Background ──────────────────────────────────── */
+  .bg-blobs {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0; overflow: hidden;
+  }
+
+  .blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(110px); opacity: 0.45;
+  }
+
+  .blob-1 {
+    width: 550px; height: 550px;
+    background: radial-gradient(circle, rgba(22, 101, 52, 0.7), transparent 70%);
+    top: -120px; left: -120px;
+    animation: blob-drift-1 32s ease-in-out infinite;
+  }
+
+  .blob-2 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(21, 128, 61, 0.4), transparent 70%);
+    top: 38%; right: -160px;
+    animation: blob-drift-2 38s ease-in-out infinite;
+  }
+
+  .blob-3 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(74, 222, 128, 0.18), transparent 70%);
+    bottom: 80px; left: 28%;
+    animation: blob-drift-3 44s ease-in-out infinite;
+  }
+
+  @keyframes blob-drift-1 {
+    0%,100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(60px, 80px) scale(1.07); }
+    66%      { transform: translate(-40px, 50px) scale(0.95); }
+  }
+
+  @keyframes blob-drift-2 {
+    0%,100% { transform: translate(0, 0) scale(1); }
+    40%      { transform: translate(-70px, -60px) scale(1.05); }
+    75%      { transform: translate(50px, 80px) scale(0.97); }
+  }
+
+  @keyframes blob-drift-3 {
+    0%,100% { transform: translate(0, 0) scale(1); }
+    30%      { transform: translate(50px, -70px) scale(1.08); }
+    65%      { transform: translate(-60px, 40px) scale(0.94); }
+  }
+
+  /* ── Background beams ── */
+  .bg-beams {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0; overflow: hidden;
+  }
+
+  .beam {
+    position: absolute; top: -60%; bottom: -20%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent 0%, transparent 15%, rgba(74,222,128,0.55) 40%, rgba(34,197,94,0.75) 50%, rgba(74,222,128,0.55) 60%, transparent 85%, transparent 100%);
+    filter: blur(0.5px);
+    animation: beam-fall linear infinite;
+  }
+
+  .beam-1 { left: 8%;   height: 55vh; animation-duration: 22s; animation-delay:   0s; opacity: 0.5; }
+  .beam-2 { left: 23%;  height: 40vh; animation-duration: 31s; animation-delay: -10s; opacity: 0.35; }
+  .beam-3 { left: 41%;  height: 65vh; animation-duration: 26s; animation-delay: -18s; opacity: 0.45; }
+  .beam-4 { left: 62%;  height: 45vh; animation-duration: 38s; animation-delay:  -5s; opacity: 0.30; }
+  .beam-5 { left: 78%;  height: 50vh; animation-duration: 29s; animation-delay: -22s; opacity: 0.40; }
+  .beam-6 { left: 90%;  height: 35vh; animation-duration: 34s; animation-delay: -12s; opacity: 0.28; }
+  .beam-7 { left: 53%;  height: 42vh; animation-duration: 41s; animation-delay:  -7s; opacity: 0.22; }
+
+  @keyframes beam-fall {
+    from { transform: translateY(-120vh); }
+    to   { transform: translateY(160vh); }
+  }
+
+  .bg-dots-base {    position: fixed; inset: 0;
+    background-image: radial-gradient(circle, rgba(34, 197, 94, 0.07) 1px, transparent 1px);
+    background-size: 26px 26px;
+    pointer-events: none; z-index: 0;
+  }
+
+  .bg-dots-sharp {
+    position: fixed; inset: 0;
+    background-image: radial-gradient(circle, rgba(134, 239, 172, 0.8) 1px, transparent 1px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(circle 320px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
+    mask-image: radial-gradient(circle 320px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
+    pointer-events: none; z-index: 0;
+    transition: -webkit-mask-position 0.05s, mask-position 0.05s;
+  }
+
+  /* ── Layout Utilities ────────────────────────────── */
+  .container {
+    width: 100%; max-width: 1100px;
+    margin-inline: auto; padding-inline: 1.5rem;
+  }
+
+  .section {
+    position: relative; z-index: 1;
+    padding-block: 4.5rem;
+  }
+
+  section[id] { scroll-margin-top: 80px; }
+
+  main { position: relative; z-index: 1; }
+
+  .divider {
+    position: relative; z-index: 1;
+    width: 100%; height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+
+  /* ── Typography ──────────────────────────────────── */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--green-500);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .section-label::before {
+    content: ''; width: 1.5rem; height: 1px;
+    background: var(--green-500); flex-shrink: 0;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--green-50);
+    font-weight: 700; letter-spacing: -0.02em;
+  }
+
+  /* ── Buttons ─────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.5rem; border-radius: 0.5rem;
+    font-family: var(--font-display); font-size: 0.875rem;
+    font-weight: 500; cursor: pointer;
+    transition: all 0.2s ease; border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--green-600); color: var(--green-50);
+    border-color: var(--green-600);
+  }
+
+  .btn-primary:hover {
+    background: var(--green-500); border-color: var(--green-500);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(34, 197, 94, 0.22);
+  }
+
+  .btn-outline {
+    background: transparent; color: var(--green-400);
+    border-color: var(--border-hover);
+  }
+
+  .btn-outline:hover {
+    background: rgba(34, 197, 94, 0.06);
+    border-color: var(--green-500); transform: translateY(-1px);
+  }
+
+  /* ── Reveal (GSAP animates these) ────────────────── */
+  .reveal { opacity: 0; transform: translateY(28px); }
 </style>
+
+<script>
+  import Lenis from 'lenis';
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── Lenis + GSAP sync ── */
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  });
+
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time: number) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+
+  /* ── Interactive dot-grid spotlight ── */
+  document.addEventListener('mousemove', (e: MouseEvent) => {
+    document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+    document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+  });
+
+  /* ── Scroll-triggered reveals ── */
+  gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+    gsap.to(el, {
+      scrollTrigger: { trigger: el, start: 'top bottom', toggleActions: 'play none none reset' },
+      y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
+    });
+  });
+
+  /* ── Stagger reveal groups ── */
+  document.querySelectorAll<HTMLElement>('.reveal-group').forEach((group) => {
+    const items = group.querySelectorAll<HTMLElement>('.reveal-item');
+    gsap.from(items, {
+      scrollTrigger: { trigger: group, start: 'top bottom', toggleActions: 'play none none reset' },
+      y: 22, opacity: 0, duration: 0.55, stagger: 0.07, ease: 'power3.out',
+    });
+  });
+
+  /* ── Nav: hide on scroll down, show on scroll up ── */
+  const nav = document.querySelector<HTMLElement>('.nav');
+  let navHidden = false;
+  lenis.on('scroll', ({ scroll, direction }: { scroll: number; direction: number }) => {
+    if (!nav) return;
+    if (scroll < 80) {
+      nav.classList.remove('nav--hidden');
+      navHidden = false;
+    } else if (direction > 0 && !navHidden) {
+      nav.classList.add('nav--hidden');
+      navHidden = true;
+    } else if (direction < 0 && navHidden) {
+      nav.classList.remove('nav--hidden');
+      navHidden = false;
+    }
+  });
+</script>

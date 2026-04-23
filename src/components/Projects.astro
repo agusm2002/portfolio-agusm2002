@@ -1,5 +1,6 @@
 ---
 const stack = ['Ubuntu Server', 'Docker', 'Ansible', 'ZeroTier', 'Nginx', 'Uptime Kuma', 'GitHub Actions'];
+const baseUrl = import.meta.env.BASE_URL;
 
 const features = [
   { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`, text: 'Ubuntu Server ARM64 como base, aprovisionado con Ansible (10+ roles de hardening)' },
@@ -110,7 +111,7 @@ const features = [
             <div class="arch-row">
               <div class="arch-node arch-node--ansible">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
-                Ansible · 10 roles
+                Ansible
               </div>
             </div>
             <div class="arch-connector arch-connector--v"></div>
@@ -255,21 +256,21 @@ const features = [
         <div class="mini-card__visual" aria-hidden="true">
           <div class="screens-fan">
             <img
-              src="/screenshots/chrono-comic.png?v=20260422"
+              src={`${baseUrl}screenshots/chrono-comic.png?v=20260422`}
               alt="Lector de cómic en Chrono Reader"
               class="fan-shot fan-shot--back"
               loading="eager"
               decoding="async"
             />
             <img
-              src="/screenshots/chrono-audio.png?v=20260422"
+              src={`${baseUrl}screenshots/chrono-audio.png?v=20260422`}
               alt="Reproductor de audiolibros en Chrono Reader"
               class="fan-shot fan-shot--mid"
               loading="eager"
               decoding="async"
             />
             <img
-              src="/screenshots/chrono-library.png?v=20260422"
+              src={`${baseUrl}screenshots/chrono-library.png?v=20260422`}
               alt="Biblioteca en Chrono Reader"
               class="fan-shot fan-shot--front"
               loading="eager"
@@ -528,7 +529,7 @@ const features = [
   /* ── Mini card ── */
   .mini-card {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 330px;
     gap: 0;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -644,25 +645,29 @@ const features = [
     color: rgba(96, 165, 250, 1);
   }
 
+  .mini-cta { margin-top: 0.3rem; }
+
   /* ── App screenshots fan (right visual) ── */
   .mini-card__visual {
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 1.2rem 0.85rem;
+    display: grid;
+    place-items: center;
+    align-self: stretch;
+    padding: 0.75rem 0.65rem;
     background: rgba(4, 8, 20, 0.4);
     overflow: hidden;
   }
 
   .screens-fan {
     position: relative;
-    width: 250px;
-    height: 540px;
+    width: 258px;
+    height: 404px;
     animation: fan-sway 12s ease-in-out infinite;
   }
 
   .fan-shot {
     position: absolute;
-    width: 190px;
+    top: 50%; left: 50%;
+    width: 176px;
     border-radius: 14px;
     box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.55),
@@ -674,8 +679,7 @@ const features = [
 
   /* back: tilted right, pushed back */
   .fan-shot--back {
-    top: 84px; left: 72px;
-    transform: rotate(9deg) scale(0.9);
+    transform: translate(-34%, -46%) rotate(9deg) scale(0.9);
     opacity: 0.7;
     z-index: 1;
     animation: fan-back-rotate 10.5s ease-in-out infinite;
@@ -683,8 +687,7 @@ const features = [
 
   /* mid: slightly tilted */
   .fan-shot--mid {
-    top: 44px; left: 38px;
-    transform: rotate(3deg) scale(0.95);
+    transform: translate(-50%, -50%) rotate(3deg) scale(0.95);
     opacity: 0.86;
     z-index: 2;
     animation: fan-mid-rotate 9.5s ease-in-out infinite;
@@ -692,8 +695,7 @@ const features = [
 
   /* front: straight, on top */
   .fan-shot--front {
-    top: 6px; left: 10px;
-    transform: rotate(-3deg);
+    transform: translate(-66%, -53%) rotate(-3deg);
     opacity: 1;
     z-index: 3;
     animation: fan-front-rotate 8.5s ease-in-out infinite;
@@ -706,34 +708,34 @@ const features = [
   }
 
   @keyframes fan-sway {
-    0%, 100% { transform: translateY(0) rotate(-1deg); }
-    50% { transform: translateY(-10px) rotate(1.5deg); }
+    0%, 100% { transform: translateY(0) rotate(-0.8deg); }
+    50% { transform: translateY(-7px) rotate(1.1deg); }
   }
 
   @keyframes fan-back-rotate {
-    0%, 100% { transform: rotate(9deg) translateY(0) scale(0.9); }
-    50% { transform: rotate(15deg) translate(7px, -14px) scale(0.91); }
+    0%, 100% { transform: translate(-34%, -46%) rotate(9deg) scale(0.9); }
+    50% { transform: translate(calc(-34% + 8px), calc(-46% - 10px)) rotate(14deg) scale(0.91); }
   }
 
   @keyframes fan-mid-rotate {
-    0%, 100% { transform: rotate(3deg) translateY(0) scale(0.95); }
-    50% { transform: rotate(8deg) translate(4px, -10px) scale(0.96); }
+    0%, 100% { transform: translate(-50%, -50%) rotate(3deg) scale(0.95); }
+    50% { transform: translate(calc(-50% + 5px), calc(-50% - 8px)) rotate(8deg) scale(0.96); }
   }
 
   @keyframes fan-front-rotate {
-    0%, 100% { transform: rotate(-3deg) translateY(0); }
-    50% { transform: rotate(-8deg) translate(-4px, -8px); }
+    0%, 100% { transform: translate(-66%, -53%) rotate(-3deg); }
+    50% { transform: translate(calc(-66% - 4px), calc(-53% - 7px)) rotate(-8deg); }
   }
 
   /* responsive */
   @media (max-width: 700px) {
     .mini-card { grid-template-columns: 1fr; }
     .mini-card__content { border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem; }
-    .mini-card__visual { padding: 1.75rem 1.25rem; }
-    .screens-fan { width: 240px; height: 430px; }
-    .fan-shot { width: 150px; }
-    .fan-shot--back  { top: 82px; left: 72px; }
-    .fan-shot--mid   { top: 42px; left: 38px; }
-    .fan-shot--front { top: 6px; left: 8px; }
+    .mini-card__visual { padding: 1.4rem 1rem; }
+    .screens-fan { width: 222px; height: 336px; }
+    .fan-shot { width: 140px; }
+    .fan-shot--back  { transform: translate(-36%, -46%) rotate(9deg) scale(0.9); }
+    .fan-shot--mid   { transform: translate(-50%, -50%) rotate(3deg) scale(0.95); }
+    .fan-shot--front { transform: translate(-66%, -53%) rotate(-3deg); }
   }
 </style>

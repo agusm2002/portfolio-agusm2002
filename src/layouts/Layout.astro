@@ -53,6 +53,11 @@ const faviconHref = `${baseUrl}favicon.svg?v=2`;
       <div class="beam beam-7"></div>
       <div class="beam beam-8"></div>
       <div class="beam beam-9"></div>
+      <div class="beam beam-10"></div>
+      <div class="beam beam-11"></div>
+      <div class="beam beam-12"></div>
+      <div class="beam beam-13"></div>
+      <div class="beam beam-14"></div>
     </div>
     <div class="bg-dots-base" aria-hidden="true"></div>
     <div class="bg-dots-sharp" aria-hidden="true"></div>
@@ -185,7 +190,12 @@ const faviconHref = `${baseUrl}favicon.svg?v=2`;
   .beam-6 { left: 90%;  height: 35vh; animation-duration: 34s; animation-delay: -12s; opacity: 0.28; }
   .beam-7 { left: 53%;  height: 42vh; animation-duration: 41s; animation-delay:  -7s; opacity: 0.22; }
   .beam-8 { left: 15%;  height: 38vh; animation-duration: 33s; animation-delay: -16s; opacity: 0.20; }
-  .beam-9 { left: 69%;  height: 46vh; animation-duration: 36s; animation-delay: -24s; opacity: 0.18; }
+  .beam-9  { left: 69%;  height: 46vh; animation-duration: 36s; animation-delay: -24s; opacity: 0.18; }
+  .beam-10 { left: 32%;  height: 52vh; animation-duration: 28s; animation-delay:  -3s; opacity: 0.24; }
+  .beam-11 { left: 47%;  height: 36vh; animation-duration: 43s; animation-delay: -14s; opacity: 0.17; }
+  .beam-12 { left: 85%;  height: 60vh; animation-duration: 24s; animation-delay:  -8s; opacity: 0.22; }
+  .beam-13 { left: 4%;   height: 44vh; animation-duration: 39s; animation-delay: -20s; opacity: 0.16; }
+  .beam-14 { left: 58%;  height: 39vh; animation-duration: 32s; animation-delay:  -1s; opacity: 0.19; }
 
   @keyframes beam-fall {
     from { transform: translateY(-120vh); }
@@ -219,7 +229,9 @@ const faviconHref = `${baseUrl}favicon.svg?v=2`;
     padding-block: 4.5rem;
   }
 
-  section[id] { scroll-margin-top: 80px; }
+  section[id]  { scroll-margin-top: 80px; }
+  #about        { scroll-margin-top: 60px; }
+  #projects     { scroll-margin-top: 110px; }
 
   main { position: relative; z-index: 1; }
 
@@ -322,6 +334,24 @@ const faviconHref = `${baseUrl}favicon.svg?v=2`;
     gsap.from(items, {
       scrollTrigger: { trigger: group, start: 'top bottom', toggleActions: 'play none none reset' },
       y: 22, opacity: 0, duration: 0.55, stagger: 0.07, ease: 'power3.out',
+    });
+  });
+
+  /* ── Nav links: delegate to Lenis to avoid double-click artefact ── */
+  const NAV_OFFSETS: Record<string, number> = {
+    about:    -60,
+    projects: -110,
+  };
+  document.querySelectorAll<HTMLAnchorElement>('.nav__link, .nav__logo').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href') ?? '';
+      const hashIdx = href.indexOf('#');
+      if (hashIdx === -1) return;
+      const id = href.slice(hashIdx + 1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: NAV_OFFSETS[id] ?? -80 });
     });
   });
 
